@@ -5,8 +5,8 @@ function FireWorks() {
   const infiniteRef = useRef()
   const circleRef = useRef()
   const refSvg = useRef()
-  const [dynamicCircles, setDynamicCircles] = useState([])
-  const dynCircleRef = useRef([])
+  const [dynamicCircles, setDynamicCircles] = useState({})
+  const dynCircleRef = useRef({})
   const [count, setCount] = useState(0)
   // wait until DOM has been rendered
   useEffect(() => {
@@ -33,31 +33,34 @@ function FireWorks() {
         "#ffe808",
       ]),
     }
-    setDynamicCircles((dynamicCircles) => {
-      return [...dynamicCircles, circle]
-    })
 
-    const index = dynamicCircles.length - 1
+    const key = Math.floor(Math.random() * 500000)
+    setDynamicCircles((dynamicCircles) => {
+      return { ...dynamicCircles, [key]: circle }
+    })
 
     // Animate the circle
-    gsap.to(dynCircleRef[dynamicCircles.length - 1].current, {
-      // Random cx based on its current position
-      cx: "+=random(-10,10)",
-      // Random cy based on its current position
-      cy: "+=random(-10,10)",
-      // Fade out
-      opacity: 0,
-      // Random duration for each circle
-      duration: 1,
-      // Prevent gsap from rounding the cx & cy values
-      autoRound: false,
-      // Once the animation is complete
-      onComplete: () => {
-        // Remove the SVG element from its parent
-        //
-        setDynamicCircles(dynamicCircles.slice(0, -2))
-      },
-    })
+    // gsap.to(dynCircleRef[dynamicCircles.length - 1].current, {
+    //   // Random cx based on its current position
+    //   cx: "+=random(-10,10)",
+    //   // Random cy based on its current position
+    //   cy: "+=random(-10,10)",
+    //   // Fade out
+    //   opacity: 0,
+    //   // Random duration for each circle
+    //   duration: 1,
+    //   // Prevent gsap from rounding the cx & cy values
+    //   autoRound: false,
+    //   // Once the animation is complete
+    //   onComplete: () => {
+    //     // Remove the SVG element from its parent
+    //     //
+    //     let circles = { ...dynamicCircles }
+    //     delete circles[key]
+
+    //     setDynamicCircles(circles)
+    //   },
+    // })
   }
 
   const animateFireWorks = () => {
@@ -116,15 +119,18 @@ function FireWorks() {
           className="inifinity"
         />
         <circle r="5" cx="0" cy="0" fill="purple" ref={circleRef} />
-        {dynamicCircles.map((circleProps, i) => (
-          <circle
-            r={circleProps.r}
-            ref={(el) => (dynCircleRef.current[i] = el)}
-            cx={circleProps.cx}
-            cy={circleProps.cy}
-            fill={circleProps.fill}
-          ></circle>
-        ))}
+        {Object.keys(dynamicCircles).map((key) => {
+          const circleProps = dynamicCircles[key]
+          return (
+            <circle
+              r={circleProps.r}
+              ref={(el) => (dynCircleRef.current[key] = el)}
+              cx={circleProps.cx}
+              cy={circleProps.cy}
+              fill={circleProps.fill}
+            ></circle>
+          )
+        })}
       </svg>
     </div>
   )
