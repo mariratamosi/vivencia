@@ -10,15 +10,46 @@ function FireWorks() {
   const [count, setCount] = useState(0)
   // wait until DOM has been rendered
   useEffect(() => {
-    if (count > 0) {
-      //console.log("Returning")
-      return
-    } else {
+    console.log("useEffect", dynamicCircles, dynCircleRef)
+    if (count == 0) {
       setCount(count + 1)
       console.log("inside useeffect")
       animateFireWorks()
     }
-  })
+
+    let circles = { ...dynamicCircles }
+    Object.keys(circles).map((key) => {
+      const circleProps = circles[key]
+      if (!circleProps.animate) {
+        console.log("animate ", key)
+        circleProps.animate = true
+        setDynamicCircles(circles)
+
+        gsap.to(dynCircleRef.current[key], {
+          // Random cx based on its current position
+          cx: "+=random(-10,10)",
+          // Random cy based on its current position
+          cy: "+=random(-10,10)",
+          // Fade out
+          opacity: 0,
+          // Random duration for each circle
+          duration: 1,
+          // Prevent gsap from rounding the cx & cy values
+          autoRound: false,
+          // Once the animation is complete
+          onComplete: () => {
+            console.log("backcka onComplete")
+
+            setDynamicCircles((circles) => {
+              const newData = { ...circles }
+              delete newData[key]
+              return newData
+            })
+          },
+        })
+      }
+    })
+  }, [dynamicCircles])
 
   function createParticle(point) {
     const circle = {
@@ -32,6 +63,7 @@ function FireWorks() {
         "#ffce00",
         "#ffe808",
       ]),
+      animate: false,
     }
 
     const key = Math.floor(Math.random() * 500000)
@@ -40,27 +72,29 @@ function FireWorks() {
     })
 
     // Animate the circle
-    // gsap.to(dynCircleRef[dynamicCircles.length - 1].current, {
-    //   // Random cx based on its current position
-    //   cx: "+=random(-10,10)",
-    //   // Random cy based on its current position
-    //   cy: "+=random(-10,10)",
-    //   // Fade out
-    //   opacity: 0,
-    //   // Random duration for each circle
-    //   duration: 1,
-    //   // Prevent gsap from rounding the cx & cy values
-    //   autoRound: false,
-    //   // Once the animation is complete
-    //   onComplete: () => {
-    //     // Remove the SVG element from its parent
-    //     //
-    //     let circles = { ...dynamicCircles }
-    //     delete circles[key]
+    // setTimeout(() => {
+    //   console.log(dynCircleRef)
+    //   gsap.to(dynCircleRef[key].current, {
+    //     // Random cx based on its current position
+    //     cx: "+=random(-10,10)",
+    //     // Random cy based on its current position
+    //     cy: "+=random(-10,10)",
+    //     // Fade out
+    //     opacity: 0,
+    //     // Random duration for each circle
+    //     duration: 1,
+    //     // Prevent gsap from rounding the cx & cy values
+    //     autoRound: false,
+    //     // Once the animation is complete
+    //     onComplete: () => {
+    //       console.log("backcka onComplete")
+    //       let circles = { ...dynamicCircles }
+    //       delete circles[key]
 
-    //     setDynamicCircles(circles)
-    //   },
-    // })
+    //       setDynamicCircles(circles)
+    //     },
+    //   })
+    // }, 2000)
   }
 
   const animateFireWorks = () => {
@@ -72,8 +106,8 @@ function FireWorks() {
       duration: 1,
       onUpdate: () => {
         // Query a point at the new distance value
-        console.log(infiniteRef, count)
-        console.log("onUpdate")
+        //console.log(infiniteRef, count)
+        //console.log("onUpdate")
 
         const point = infiniteRef.current.getPointAtLength(val.distance)
         //console.log(point)
@@ -128,6 +162,7 @@ function FireWorks() {
               cx={circleProps.cx}
               cy={circleProps.cy}
               fill={circleProps.fill}
+              key={key}
             ></circle>
           )
         })}
