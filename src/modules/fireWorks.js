@@ -70,31 +70,6 @@ function FireWorks() {
     setDynamicCircles((dynamicCircles) => {
       return { ...dynamicCircles, [key]: circle }
     })
-
-    // Animate the circle
-    // setTimeout(() => {
-    //   console.log(dynCircleRef)
-    //   gsap.to(dynCircleRef[key].current, {
-    //     // Random cx based on its current position
-    //     cx: "+=random(-10,10)",
-    //     // Random cy based on its current position
-    //     cy: "+=random(-10,10)",
-    //     // Fade out
-    //     opacity: 0,
-    //     // Random duration for each circle
-    //     duration: 1,
-    //     // Prevent gsap from rounding the cx & cy values
-    //     autoRound: false,
-    //     // Once the animation is complete
-    //     onComplete: () => {
-    //       console.log("backcka onComplete")
-    //       let circles = { ...dynamicCircles }
-    //       delete circles[key]
-
-    //       setDynamicCircles(circles)
-    //     },
-    //   })
-    // }, 2000)
   }
 
   const animateFireWorks = () => {
