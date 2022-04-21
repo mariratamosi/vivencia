@@ -25,31 +25,39 @@ function FireWorks() {
       r: Math.random() * 2 + 0.2,
       cx: point.x,
       cy: point.y,
-      fill: "purple",
+      fill: gsap.utils.random([
+        "#ff0000",
+        "#ff5a00",
+        "#ff9a00",
+        "#ffce00",
+        "#ffe808",
+      ]),
     }
     setDynamicCircles((dynamicCircles) => {
       return [...dynamicCircles, circle]
     })
 
+    const index = dynamicCircles.length - 1
+
     // Animate the circle
-    // gsap.to(dynCircleRef[dynamicCircles.length - 1].current, {
-    //   // Random cx based on its current position
-    //   cx: "+=random(-10,10)",
-    //   // Random cy based on its current position
-    //   cy: "+=random(-10,10)",
-    //   // Fade out
-    //   opacity: 0.8,
-    //   // Random duration for each circle
-    //   duration: "random(1, 2)",
-    //   // Prevent gsap from rounding the cx & cy values
-    //   autoRound: false,
-    //   // Once the animation is complete
-    //   onComplete: () => {
-    //     // Remove the SVG element from its parent
-    //     //
-    //     setDynamicCircles(dynamicCircles.slice(0, -2))
-    //   },
-    // })
+    gsap.to(dynCircleRef[dynamicCircles.length - 1].current, {
+      // Random cx based on its current position
+      cx: "+=random(-10,10)",
+      // Random cy based on its current position
+      cy: "+=random(-10,10)",
+      // Fade out
+      opacity: 0,
+      // Random duration for each circle
+      duration: 1,
+      // Prevent gsap from rounding the cx & cy values
+      autoRound: false,
+      // Once the animation is complete
+      onComplete: () => {
+        // Remove the SVG element from its parent
+        //
+        setDynamicCircles(dynamicCircles.slice(0, -2))
+      },
+    })
   }
 
   const animateFireWorks = () => {
