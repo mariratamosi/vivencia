@@ -31,18 +31,13 @@ function InfiniteDot() {
       // Function call on each frame of the animation
       onUpdate: () => {
         // Query a point at the new distance value
-        if (infiniteRef === null || infiniteRef.current === null) {
-          console.log("onUpdate nothing to do")
-          return
-        }
+
+        if (!infiniteRef || !infiniteRef.current) return
 
         const point = infiniteRef.current.getPointAtLength(val.distance)
         // Update the circle coordinates
         circleRef.current.setAttribute("cy", point.y)
         circleRef.current.setAttribute("cx", point.x)
-      },
-      onComplete: () => {
-        console.log("onComplete")
       },
     })
   }

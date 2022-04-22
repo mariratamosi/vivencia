@@ -5,7 +5,6 @@ function FireWorks() {
   const infiniteRef = useRef()
   const [dynamicCircles, setDynamicCircles] = useState({})
   const dynCircleRef = useRef({})
-  const [count, setCount] = useState(0)
   const bombLength = { distance: 0 }
   let lineAnimation = null
   let pointDetectAnimation = null
@@ -13,7 +12,7 @@ function FireWorks() {
   useEffect(() => {
     animateFireWorks()
 
-    console.log("halla")
+    console.log("FireWorks renders ")
 
     // let circles = { ...dynamicCircles }
     // Object.keys(circles).map((key) => {
@@ -45,7 +44,7 @@ function FireWorks() {
     // }
     //})
     return () => {
-      console.log("f cleanup")
+      console.log("FireWorks cleanup")
       if (pointDetectAnimation) {
         pointDetectAnimation.kill()
       }
@@ -53,7 +52,7 @@ function FireWorks() {
         lineAnimation.kill()
       }
     }
-  }, [count])
+  }, [])
 
   function createParticle(point) {
     const circle = {
