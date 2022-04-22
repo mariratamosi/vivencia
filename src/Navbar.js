@@ -9,6 +9,9 @@ function Navbar() {
         <Link to="/infinity" className="Nav-options">
           Infinity
         </Link>
+        <Link to="/three-basic" className="Nav-options">
+          Basic-three
+        </Link>
       </div>{" "}
       <div variant="h4" className="Nav-header">
         Vivencia
