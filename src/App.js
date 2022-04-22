@@ -3,9 +3,9 @@
 import "./App.css"
 import FireWorks from "./modules/fireWorks"
 import InfiniteDot from "./modules/infinityDot"
-import BasicThreeComp from "./three/basic"
 import Navbar from "./Navbar"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import ThreeStars from "./three/ThreeStars"
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<FireWorks />} />
           <Route path="/infinity" element={<InfiniteDot />} />
-          <Route path="/three-basic" element={<BasicThreeComp />} />
+          <Route path="/three-basic" element={<ThreeStars />} />
         </Routes>
       </div>
     </Router>

@@ -5,9 +5,11 @@ import * as random from "maath/random/dist/maath-random.esm"
 
 export default function ThreeStars() {
   return (
-    <Canvas camera={{ position: [0, 0, 1] }}>
-      <Stars />
-    </Canvas>
+    <div className="sky">
+      <Canvas camera={{ position: [0, 0, 1] }}>
+        <Stars />
+      </Canvas>
+    </div>
   )
 }
 
