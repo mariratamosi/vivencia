@@ -4,17 +4,24 @@ import { useRef, useEffect } from "react"
 function InfiniteDot() {
   const infiniteRef = useRef()
   const circleRef = useRef()
+  let dotAnimation = null
 
   // wait until DOM has been rendered
   useEffect(() => {
     animate()
-  })
+
+    return () => {
+      if (dotAnimation) {
+        dotAnimation.kill()
+      }
+    }
+  }, [])
 
   const animate = () => {
     // Create an object that gsap can animate
     const val = { distance: 0 }
     // Create a tween
-    gsap.to(val, {
+    dotAnimation = gsap.to(val, {
       // Animate from distance 0 to the total distance
       distance: infiniteRef.current.getTotalLength(),
       // Loop the animation
@@ -24,10 +31,18 @@ function InfiniteDot() {
       // Function call on each frame of the animation
       onUpdate: () => {
         // Query a point at the new distance value
+        if (infiniteRef === null || infiniteRef.current === null) {
+          console.log("onUpdate nothing to do")
+          return
+        }
+
         const point = infiniteRef.current.getPointAtLength(val.distance)
         // Update the circle coordinates
         circleRef.current.setAttribute("cy", point.y)
         circleRef.current.setAttribute("cx", point.x)
+      },
+      onComplete: () => {
+        console.log("onComplete")
       },
     })
   }
