@@ -1,19 +1,18 @@
 import gsap from "gsap"
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 
 function InfiniteDot() {
   const infiniteRef = useRef()
   const circleRef = useRef()
-  let dotAnimation = null
 
   // wait until DOM has been rendered
   useEffect(() => {
-    animate()
+    console.log("InfiniteDot useEffect")
+    const dotAnimation = animate()
 
     return () => {
-      if (dotAnimation) {
-        dotAnimation.kill()
-      }
+      console.log("InfiniteDot cleanup", dotAnimation)
+      dotAnimation.kill()
     }
   }, [])
 
@@ -21,7 +20,7 @@ function InfiniteDot() {
     // Create an object that gsap can animate
     const val = { distance: 0 }
     // Create a tween
-    dotAnimation = gsap.to(val, {
+    const dotAnimationLocal = gsap.to(val, {
       // Animate from distance 0 to the total distance
       distance: infiniteRef.current.getTotalLength(),
       // Loop the animation
@@ -40,6 +39,8 @@ function InfiniteDot() {
         circleRef.current.setAttribute("cx", point.x)
       },
     })
+
+    return dotAnimationLocal
   }
 
   // DOM to render

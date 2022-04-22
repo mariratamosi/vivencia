@@ -6,13 +6,12 @@ function FireWorks() {
   const [dynamicCircles, setDynamicCircles] = useState({})
   const dynCircleRef = useRef({})
   const bombLength = { distance: 0 }
-  let lineAnimation = null
-  let pointDetectAnimation = null
+
   // wait until DOM has been rendered
   useEffect(() => {
-    animateFireWorks()
+    const { lineAnimation, pointDetectAnimation } = animateFireWorks()
 
-    console.log("FireWorks renders ")
+    console.log("FireWorks renders")
 
     // let circles = { ...dynamicCircles }
     // Object.keys(circles).map((key) => {
@@ -44,13 +43,10 @@ function FireWorks() {
     // }
     //})
     return () => {
-      console.log("FireWorks cleanup")
-      if (pointDetectAnimation) {
-        pointDetectAnimation.kill()
-      }
-      if (lineAnimation) {
-        lineAnimation.kill()
-      }
+      console.log("FireWorks cleanup", pointDetectAnimation, lineAnimation)
+
+      pointDetectAnimation.kill()
+      lineAnimation.kill()
     }
   }, [])
 
@@ -76,7 +72,7 @@ function FireWorks() {
   }
 
   const animateFireWorks = () => {
-    pointDetectAnimation = gsap.to(bombLength, {
+    const pointDetectAnimation = gsap.to(bombLength, {
       distance: infiniteRef.current.getTotalLength(),
       duration: 5,
       repeatDelay: 1,
@@ -99,13 +95,18 @@ function FireWorks() {
       "stroke-dashoffset",
       infiniteRef.current.getTotalLength() * 2
     )
-    lineAnimation = gsap.to(infiniteRef.current, {
+    const lineAnimation = gsap.to(infiniteRef.current, {
       strokeDashoffset: infiniteRef.current.getTotalLength(),
       duration: 5,
       repeat: -1,
       // Wait 1sec before repeating
       repeatDelay: 1,
     })
+
+    return {
+      lineAnimation,
+      pointDetectAnimation,
+    }
   }
 
   // DOM to render
