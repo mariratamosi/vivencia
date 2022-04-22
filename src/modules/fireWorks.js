@@ -1,50 +1,24 @@
 import gsap from "gsap"
 import { useRef, useEffect, useState } from "react"
+import FireWorksCircle from "./fireWorksCircle"
 
 function FireWorks() {
   const infiniteRef = useRef()
-  const circleRef = useRef()
-  const refSvg = useRef()
   const [dynamicCircles, setDynamicCircles] = useState({})
-  const dynCircleRef = useRef({})
-  const [count, setCount] = useState(0)
+  const bombLength = { distance: 0 }
+
   // wait until DOM has been rendered
   useEffect(() => {
-    if (count == 0) {
-      setCount(count + 1)
-      animateFireWorks()
+    const { lineAnimation, pointDetectAnimation } = animateFireWorks()
+
+    console.log("FireWorks renders")
+    return () => {
+      console.log("FireWorks cleanup", pointDetectAnimation, lineAnimation)
+
+      pointDetectAnimation.kill()
+      lineAnimation.kill()
     }
-
-    let circles = { ...dynamicCircles }
-    Object.keys(circles).map((key) => {
-      const circleProps = circles[key]
-      if (!circleProps.animate) {
-        circleProps.animate = true
-        setDynamicCircles(circles)
-
-        gsap.to(dynCircleRef.current[key], {
-          // Random cx based on its current position
-          cx: "+=random(-20,20)",
-          // Random cy based on its current position
-          cy: "+=random(-20,20)",
-          // Fade out
-          opacity: 0,
-          // Random duration for each circle
-          duration: "random(1,4)",
-          // Prevent gsap from rounding the cx & cy values
-          autoRound: false,
-          // Once the animation is complete
-          onComplete: () => {
-            setDynamicCircles((circles) => {
-              const newData = { ...circles }
-              delete newData[key]
-              return newData
-            })
-          },
-        })
-      }
-    })
-  }, [dynamicCircles])
+  }, [])
 
   function createParticle(point) {
     const circle = {
@@ -68,15 +42,15 @@ function FireWorks() {
   }
 
   const animateFireWorks = () => {
-    const val = { distance: 0 }
-    gsap.to(val, {
+    const pointDetectAnimation = gsap.to(bombLength, {
       distance: infiniteRef.current.getTotalLength(),
       duration: 5,
       repeatDelay: 1,
       repeat: -1,
       onUpdate: () => {
         // Query a point at the new distance value
-        const point = infiniteRef.current.getPointAtLength(val.distance)
+        if (infiniteRef === null || infiniteRef.current === null) return
+        const point = infiniteRef.current.getPointAtLength(bombLength.distance)
 
         // Create a new particle
         createParticle(point)
@@ -91,13 +65,18 @@ function FireWorks() {
       "stroke-dashoffset",
       infiniteRef.current.getTotalLength() * 2
     )
-    gsap.to(infiniteRef.current, {
+    const lineAnimation = gsap.to(infiniteRef.current, {
       strokeDashoffset: infiniteRef.current.getTotalLength(),
       duration: 5,
       repeat: -1,
       // Wait 1sec before repeating
       repeatDelay: 1,
     })
+
+    return {
+      lineAnimation,
+      pointDetectAnimation,
+    }
   }
 
   // DOM to render
@@ -118,14 +97,13 @@ function FireWorks() {
         {Object.keys(dynamicCircles).map((key) => {
           const circleProps = dynamicCircles[key]
           return (
-            <circle
+            <FireWorksCircle
               r={circleProps.r}
-              ref={(el) => (dynCircleRef.current[key] = el)}
               cx={circleProps.cx}
               cy={circleProps.cy}
               fill={circleProps.fill}
               key={key}
-            ></circle>
+            ></FireWorksCircle>
           )
         })}
       </svg>

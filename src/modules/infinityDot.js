@@ -7,14 +7,20 @@ function InfiniteDot() {
 
   // wait until DOM has been rendered
   useEffect(() => {
-    animate()
-  })
+    console.log("InfiniteDot useEffect")
+    const dotAnimation = animate()
+
+    return () => {
+      console.log("InfiniteDot cleanup", dotAnimation)
+      dotAnimation.kill()
+    }
+  }, [])
 
   const animate = () => {
     // Create an object that gsap can animate
     const val = { distance: 0 }
     // Create a tween
-    gsap.to(val, {
+    const dotAnimationLocal = gsap.to(val, {
       // Animate from distance 0 to the total distance
       distance: infiniteRef.current.getTotalLength(),
       // Loop the animation
@@ -24,12 +30,17 @@ function InfiniteDot() {
       // Function call on each frame of the animation
       onUpdate: () => {
         // Query a point at the new distance value
+
+        if (!infiniteRef || !infiniteRef.current) return
+
         const point = infiniteRef.current.getPointAtLength(val.distance)
         // Update the circle coordinates
         circleRef.current.setAttribute("cy", point.y)
         circleRef.current.setAttribute("cx", point.x)
       },
     })
+
+    return dotAnimationLocal
   }
 
   // DOM to render
