@@ -8,10 +8,12 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <Routes>
-        <Route exact path="/" element={<FireWorks />} />
-        <Route path="/infinity" element={<InfiniteDot />} />
-      </Routes>
+      <div className="main-content">
+        <Routes>
+          <Route exact path="/" element={<FireWorks />} />
+          <Route path="/infinity" element={<InfiniteDot />} />
+        </Routes>
+      </div>
     </Router>
   )
 }

@@ -1,12 +1,18 @@
 import { Link } from "react-router-dom"
 function Navbar() {
   return (
-    <div>
+    <div className="Nav-container">
       <div>
-        <Link to="/">Home</Link>
-        <Link to="/infinity">Infinity</Link>
+        <Link to="/" className="Nav-options">
+          Home
+        </Link>
+        <Link to="/infinity" className="Nav-options">
+          Infinity
+        </Link>
       </div>{" "}
-      <div variant="h4">Vivencia</div>
+      <div variant="h4" className="Nav-header">
+        Vivencia
+      </div>
     </div>
   )
 }
