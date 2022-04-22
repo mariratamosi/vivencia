@@ -1,5 +1,5 @@
 import gsap from "gsap"
-import { useRef, useEffect, useState } from "react"
+import { useRef, useEffect } from "react"
 
 function InfiniteDot() {
   const infiniteRef = useRef()

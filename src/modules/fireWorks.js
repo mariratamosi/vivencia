@@ -1,10 +1,10 @@
 import gsap from "gsap"
 import { useRef, useEffect, useState } from "react"
+import FireWorksCircle from "./fireWorksCircle"
 
 function FireWorks() {
   const infiniteRef = useRef()
   const [dynamicCircles, setDynamicCircles] = useState({})
-  const dynCircleRef = useRef({})
   const bombLength = { distance: 0 }
 
   // wait until DOM has been rendered
@@ -12,36 +12,6 @@ function FireWorks() {
     const { lineAnimation, pointDetectAnimation } = animateFireWorks()
 
     console.log("FireWorks renders")
-
-    // let circles = { ...dynamicCircles }
-    // Object.keys(circles).map((key) => {
-    //   const circleProps = circles[key]
-    //   if (!circleProps.animate) {
-    //     circleProps.animate = true
-    //     setDynamicCircles(circles)
-
-    //     gsap.to(dynCircleRef.current[key], {
-    //       // Random cx based on its current position
-    //       cx: "+=random(-20,20)",
-    //       // Random cy based on its current position
-    //       cy: "+=random(-20,20)",
-    //       // Fade out
-    //       opacity: 0,
-    //       // Random duration for each circle
-    //       duration: "random(1,4)",
-    //       // Prevent gsap from rounding the cx & cy values
-    //       autoRound: false,
-    //       // Once the animation is complete
-    //       onComplete: () => {
-    //         setDynamicCircles((circles) => {
-    //           const newData = { ...circles }
-    //           delete newData[key]
-    //           return newData
-    //         })
-    //       },
-    //     })
-    // }
-    //})
     return () => {
       console.log("FireWorks cleanup", pointDetectAnimation, lineAnimation)
 
@@ -127,14 +97,13 @@ function FireWorks() {
         {Object.keys(dynamicCircles).map((key) => {
           const circleProps = dynamicCircles[key]
           return (
-            <circle
+            <FireWorksCircle
               r={circleProps.r}
-              ref={(el) => (dynCircleRef.current[key] = el)}
               cx={circleProps.cx}
               cy={circleProps.cy}
               fill={circleProps.fill}
               key={key}
-            ></circle>
+            ></FireWorksCircle>
           )
         })}
       </svg>
