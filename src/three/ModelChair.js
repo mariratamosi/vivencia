@@ -1,4 +1,4 @@
-import { Canvas } from "@react-three/fiber"
+import { Canvas, useFrame } from "@react-three/fiber"
 import { Html, useGLTF } from "@react-three/drei"
 import { Section } from "Utility/section"
 import { Suspense, useEffect, useRef } from "react"
@@ -19,8 +19,15 @@ const Lights = () => {
   )
 }
 
-const HTMLContent = ({ bgColor }) => {
+const HTMLContent = ({ bgColor, children, modelPath, position }) => {
   const ref = useRef()
+
+  useFrame(() => {
+    ref.current.rotation.y += 0.01
+    // ref.current.rotation.x += 0.001
+    // ref.current.rotation.z += 0.001
+  })
+
   useEffect(() => {
     document.body.style.background = bgColor
   }, [])
@@ -42,6 +49,7 @@ export default function ModelChair() {
       <Canvas camera={{ position: [0, 0, 120], fov: 70 }}>
         <Lights />
         <Suspense fallback={null}>
+          <HTMLContent bgColor="#f15946" />
           <HTMLContent bgColor="#f15946" />
         </Suspense>
       </Canvas>
