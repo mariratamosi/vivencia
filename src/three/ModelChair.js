@@ -2,6 +2,7 @@ import { Canvas, useFrame } from "@react-three/fiber"
 import { Html, useGLTF } from "@react-three/drei"
 import { Section } from "Utility/section"
 import { Suspense, useEffect, useRef } from "react"
+import state from "Utility/state"
 
 const Model = ({ modelPath }) => {
   const gltf = useGLTF(modelPath)
@@ -46,6 +47,8 @@ const HTMLContent = ({ bgColor, children, modelPath, position }) => {
 }
 
 export default function ModelChair() {
+  const domContent = useRef()
+
   return (
     <div className="model-chair">
       {/* TODO solve color issue */}
@@ -68,6 +71,13 @@ export default function ModelChair() {
           </HTMLContent>
         </Suspense>
       </Canvas>
+      <div className="scrollArea">
+        {/* html content here */}
+        <div style={{ position: "sticky", top: 0 }} ref={domContent}></div>
+
+        {/* height related */}
+        <div style={{ height: `${state.pages * 100}vh` }}></div>
+      </div>
     </div>
   )
 }
