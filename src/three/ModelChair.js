@@ -16,7 +16,7 @@ const HTMLContent = ({ bgColor }) => {
     <Section factor={1.5} offset={1}>
       <group position={[0, 250, 0]}>
         <mesh>
-          <Model position={[0, 0, 0]} />
+          <Model position={[0, -35, 0]} />
         </mesh>
       </group>
     </Section>
