@@ -57,14 +57,14 @@ export default function ModelChair() {
             modelPath="/3d/armchairYellow.gltf"
             position={250}
           >
-            <div>Hello 1</div>
+            <div>Yellow</div>
           </HTMLContent>
           <HTMLContent
             bgColor="#f15900"
             modelPath="/3d/armchairGreen.gltf"
             position={0}
           >
-            <div>Hello 2</div>
+            <div>Green</div>
           </HTMLContent>
         </Suspense>
       </Canvas>
