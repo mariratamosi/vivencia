@@ -3,6 +3,7 @@ import { Html, useGLTF } from "@react-three/drei"
 import { Section } from "Utility/section"
 import { Suspense, useEffect, useRef } from "react"
 import state from "Utility/state"
+import { useInView } from "react-intersection-observer"
 
 const Model = ({ modelPath }) => {
   const gltf = useGLTF(modelPath)
@@ -28,6 +29,7 @@ const HTMLContent = ({
   domContent,
 }) => {
   const ref = useRef()
+  const [refItem, inView] = useInView({ threshold: 0 })
 
   useFrame(() => {
     ref.current.rotation.y += 0.01
@@ -36,8 +38,8 @@ const HTMLContent = ({
   })
 
   useEffect(() => {
-    document.body.style.background = bgColor
-  }, [])
+    inView && (document.body.style.background = bgColor)
+  }, [inView])
   return (
     <Section factor={1.5} offset={1}>
       <group position={[0, position, 0]}>
@@ -45,7 +47,7 @@ const HTMLContent = ({
           <Model modelPath={modelPath} />
         </mesh>
         <Html portal={domContent} fullscreen className="title">
-          {children}
+          <div ref={refItem}>{children}</div>
         </Html>
       </group>
     </Section>
@@ -83,7 +85,7 @@ export default function ModelChair() {
             <div>Green</div>
           </HTMLContent>
           <HTMLContent
-            bgColor="#f10000"
+            bgColor="gray"
             modelPath="/3d/armchairGray.gltf"
             position={-250}
             domContent={domContent}
