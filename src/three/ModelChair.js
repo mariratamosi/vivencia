@@ -8,6 +8,17 @@ const Model = () => {
   return <primitive object={gltf.scene} dispose={null} />
 }
 
+const Lights = () => {
+  return (
+    <>
+      <ambientLight intensity={0.5}></ambientLight>
+      <directionalLight position={[10, 10, 5]} intensity={0.5} />
+      <directionalLight position={[0, 10, 0]} intensity={1} />
+      <spotLight intensity={1} position={[1000, 0, 0]} />
+    </>
+  )
+}
+
 const HTMLContent = ({ bgColor }) => {
   useEffect(() => {
     document.body.style.background = bgColor
@@ -27,9 +38,10 @@ export default function ModelChair() {
   return (
     <div className="model-chair">
       {/* TODO solve color issue */}
-      <Canvas camera={{ position: [0, 0, 120], fov: 70 }}>
+      <Canvas camera={{ position: [0, 0, 170], fov: 60 }}>
+        <Lights />
         <Suspense fallback={null}>
-          <HTMLContent bgColor="#00FF00" />
+          <HTMLContent bgColor="#f15946" />
         </Suspense>
       </Canvas>
     </div>
