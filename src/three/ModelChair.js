@@ -67,7 +67,7 @@ export default function ModelChair() {
         <Lights />
         <Suspense fallback={null}>
           <HTMLContent
-            bgColor="#f15946"
+            bgColor="yellow"
             modelPath="/3d/armchairYellow.gltf"
             position={250}
             domContent={domContent}
@@ -82,6 +82,14 @@ export default function ModelChair() {
           >
             <div>Green</div>
           </HTMLContent>
+          <HTMLContent
+            bgColor="#f10000"
+            modelPath="/3d/armchairGray.gltf"
+            position={-250}
+            domContent={domContent}
+          >
+            <div>Gray</div>
+          </HTMLContent>
         </Suspense>
       </Canvas>
       <div className="scrollArea" ref={scrollArea} onScroll={onScroll}>
@@ -89,7 +97,7 @@ export default function ModelChair() {
         <div style={{ position: "sticky", top: 0 }} ref={domContent}></div>
 
         {/* height related */}
-        <div style={{ height: `${state.pages * 100}vh` }}></div>
+        <div style={{ height: `${state.sections * 100}vh` }}></div>
       </div>
     </div>
   )
