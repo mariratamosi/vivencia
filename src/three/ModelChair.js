@@ -3,8 +3,8 @@ import { Html, useGLTF } from "@react-three/drei"
 import { Section } from "Utility/section"
 import { Suspense, useEffect, useRef } from "react"
 
-const Model = () => {
-  const gltf = useGLTF("/3d/armchairYellow.gltf")
+const Model = ({ modelPath }) => {
+  const gltf = useGLTF(modelPath)
   return <primitive object={gltf.scene} dispose={null} />
 }
 
@@ -33,10 +33,13 @@ const HTMLContent = ({ bgColor, children, modelPath, position }) => {
   }, [])
   return (
     <Section factor={1.5} offset={1}>
-      <group position={[0, 250, 0]}>
+      <group position={[0, position, 0]}>
         <mesh ref={ref} position={[0, -35, 0]}>
-          <Model />
+          <Model modelPath={modelPath} />
         </mesh>
+        <Html fullscreen className="title">
+          {children}
+        </Html>
       </group>
     </Section>
   )
@@ -49,8 +52,20 @@ export default function ModelChair() {
       <Canvas camera={{ position: [0, 0, 120], fov: 70 }}>
         <Lights />
         <Suspense fallback={null}>
-          <HTMLContent bgColor="#f15946" />
-          <HTMLContent bgColor="#f15946" />
+          <HTMLContent
+            bgColor="#f15946"
+            modelPath="/3d/armchairYellow.gltf"
+            position={250}
+          >
+            <div>Hello 1</div>
+          </HTMLContent>
+          <HTMLContent
+            bgColor="#f15900"
+            modelPath="/3d/armchairGreen.gltf"
+            position={0}
+          >
+            <div>Hello 2</div>
+          </HTMLContent>
         </Suspense>
       </Canvas>
     </div>
