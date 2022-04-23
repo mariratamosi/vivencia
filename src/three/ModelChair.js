@@ -20,7 +20,13 @@ const Lights = () => {
   )
 }
 
-const HTMLContent = ({ bgColor, children, modelPath, position }) => {
+const HTMLContent = ({
+  bgColor,
+  children,
+  modelPath,
+  position,
+  domContent,
+}) => {
   const ref = useRef()
 
   useFrame(() => {
@@ -38,7 +44,7 @@ const HTMLContent = ({ bgColor, children, modelPath, position }) => {
         <mesh ref={ref} position={[0, -35, 0]}>
           <Model modelPath={modelPath} />
         </mesh>
-        <Html fullscreen className="title">
+        <Html portal={domContent} fullscreen className="title">
           {children}
         </Html>
       </group>
@@ -59,6 +65,7 @@ export default function ModelChair() {
             bgColor="#f15946"
             modelPath="/3d/armchairYellow.gltf"
             position={250}
+            domContent={domContent}
           >
             <div>Yellow</div>
           </HTMLContent>
@@ -66,6 +73,7 @@ export default function ModelChair() {
             bgColor="#f15900"
             modelPath="/3d/armchairGreen.gltf"
             position={0}
+            domContent={domContent}
           >
             <div>Green</div>
           </HTMLContent>
