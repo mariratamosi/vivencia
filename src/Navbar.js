@@ -12,6 +12,9 @@ function Navbar() {
         <Link to="/three-basic" className="Nav-options">
           Basic-three
         </Link>
+        <Link to="/three-chair" className="Nav-options">
+          Three-chair
+        </Link>
       </div>{" "}
       <div variant="h4" className="Nav-header">
         Vivencia

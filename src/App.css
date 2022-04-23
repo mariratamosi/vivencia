@@ -14,11 +14,17 @@ body {
   width: 100%;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
 .main-content {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
+  flex-grow: 1;
 }
 
 .Nav-container {
@@ -36,6 +42,11 @@ body {
 
 .sky {
   background: black;
+  height: 100%;
+  width: 100%;
+}
+
+.model-chair {
   height: 100%;
   width: 100%;
 }
