@@ -54,6 +54,11 @@ const HTMLContent = ({
 
 export default function ModelChair() {
   const domContent = useRef()
+  const scrollArea = useRef()
+
+  const onScroll = (e) => (state.top.current = e.target.scrollTop)
+
+  useEffect(() => void onScroll({ target: scrollArea.current }), [])
 
   return (
     <div className="model-chair">
@@ -79,7 +84,7 @@ export default function ModelChair() {
           </HTMLContent>
         </Suspense>
       </Canvas>
-      <div className="scrollArea">
+      <div className="scrollArea" ref={scrollArea} onScroll={onScroll}>
         {/* html content here */}
         <div style={{ position: "sticky", top: 0 }} ref={domContent}></div>
 
