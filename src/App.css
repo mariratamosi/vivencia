@@ -14,10 +14,17 @@ body {
   width: 100%;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
 .main-content {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  flex-grow: 1;
 }
 
 .Nav-container {
@@ -26,9 +33,64 @@ body {
   align-items: center;
   height: 100px;
   font-size: 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 99999;
 }
 
 .Nav-options {
   margin-right: 20px;
   text-decoration: none;
+}
+
+.sky {
+  background: black;
+  height: 100%;
+  width: 100%;
+}
+
+.model-chair {
+  height: 100%;
+  width: 100%;
+}
+
+.model-chair .title {
+  font-size: 10rem;
+  text-align: center;
+  width: 100%;
+  margin: 50px auto;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title span {
+  display: block;
+}
+
+.scrollArea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-spinner {
+  width: 100px;
+  height: 100px;
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #383636; /* Black */
+  border-radius: 50%;
+  animation: spinner 1.5s linear infinite;
 }
