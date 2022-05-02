@@ -3,7 +3,7 @@
 import "./App.css"
 import FireWorks from "./modules/fireWorks"
 import InfiniteDot from "./modules/infinityDot"
-import ModelChair from "./three/ModelChair"
+import ModelChair from "./three/Chairs/ModelChair"
 import Navbar from "./Navbar"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import ThreeStars from "./three/ThreeStars"
