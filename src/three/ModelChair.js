@@ -27,6 +27,7 @@ const HTMLContent = ({
   modelPath,
   position,
   domContent,
+  modelArea,
 }) => {
   const ref = useRef()
   const [refItem, inView] = useInView({ threshold: 0 })
@@ -38,7 +39,7 @@ const HTMLContent = ({
   })
 
   useEffect(() => {
-    inView && (document.body.style.background = bgColor)
+    inView && (modelArea.current.style.background = bgColor)
   }, [inView])
   return (
     <Section factor={1.5} offset={1}>
@@ -57,13 +58,14 @@ const HTMLContent = ({
 export default function ModelChair() {
   const domContent = useRef()
   const scrollArea = useRef()
+  const modelArea = useRef()
 
   const onScroll = (e) => (state.top.current = e.target.scrollTop)
 
   useEffect(() => void onScroll({ target: scrollArea.current }), [])
 
   return (
-    <div className="model-chair">
+    <div className="model-chair" ref={modelArea}>
       {/* TODO solve color issue */}
       <Canvas camera={{ position: [0, 0, 120], fov: 70 }}>
         <Lights />
@@ -73,6 +75,7 @@ export default function ModelChair() {
             modelPath="/3d/armchairYellow.gltf"
             position={250}
             domContent={domContent}
+            modelArea={modelArea}
           >
             <div>Yellow</div>
           </HTMLContent>
@@ -81,6 +84,7 @@ export default function ModelChair() {
             modelPath="/3d/armchairGreen.gltf"
             position={0}
             domContent={domContent}
+            modelArea={modelArea}
           >
             <div>Green</div>
           </HTMLContent>
@@ -89,6 +93,7 @@ export default function ModelChair() {
             modelPath="/3d/armchairGray.gltf"
             position={-250}
             domContent={domContent}
+            modelArea={modelArea}
           >
             <div>Gray</div>
           </HTMLContent>
