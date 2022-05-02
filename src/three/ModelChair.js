@@ -1,7 +1,8 @@
 import { Canvas, useFrame } from "@react-three/fiber"
-import { Html, useGLTF } from "@react-three/drei"
+import { Html, useGLTF, useProgress } from "@react-three/drei"
+import { a, useTransition } from "react-spring"
 import { Section } from "Utility/section"
-import { Suspense, useEffect, useRef } from "react"
+import React, { Suspense, useEffect, useRef, useState } from "react"
 import state from "Utility/state"
 import { useInView } from "react-intersection-observer"
 
@@ -55,10 +56,36 @@ const HTMLContent = ({
   )
 }
 
+// const Loader = () => {
+//   const { active, progress } = useProgress()
+//   const transition = useTransition(active, {
+//     from: { opacity: 1, progress: 0 },
+//     leave: { opacity: 0 },
+//     update: { progress },
+//   })
+//   return transition(
+//     ({ progress, opacity }, active) =>
+//       active && (
+//         <a.div className="loading" style={{ opacity }}>
+//           <div className="loading-bar-container">
+//             <a.div className="loading-bar" style={{ width: progress }}></a.div>
+//             <span>{progress} made</span>
+//           </div>
+//         </a.div>
+//       )
+//   )
+// }
+
+function Loader() {
+  const { active, progress, errors, item, loaded, total } = useProgress()
+  return <Html center>{progress} % loaded</Html>
+}
+
 export default function ModelChair() {
   const domContent = useRef()
   const scrollArea = useRef()
   const modelArea = useRef()
+  const [events, setEvents] = useState()
 
   const onScroll = (e) => (state.top.current = e.target.scrollTop)
 
@@ -69,7 +96,7 @@ export default function ModelChair() {
       {/* TODO solve color issue */}
       <Canvas camera={{ position: [0, 0, 120], fov: 70 }}>
         <Lights />
-        <Suspense fallback={null}>
+        <Suspense fallback={<Loader />}>
           <HTMLContent
             bgColor="yellow"
             modelPath="/3d/armchairYellow.gltf"
@@ -99,7 +126,12 @@ export default function ModelChair() {
           </HTMLContent>
         </Suspense>
       </Canvas>
-      <div className="scrollArea" ref={scrollArea} onScroll={onScroll}>
+      <div
+        className="scrollArea"
+        ref={scrollArea}
+        onScroll={onScroll}
+        {...events}
+      >
         {/* html content here */}
         <div style={{ position: "sticky", top: 0 }} ref={domContent}></div>
 
