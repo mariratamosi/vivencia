@@ -9,9 +9,9 @@ function Navbar() {
         <Link to="/infinity" className="Nav-options">
           Infinity
         </Link>
-        <Link to="/three-basic" className="Nav-options">
+        {/* <Link to="/three-basic" className="Nav-options">
           Basic-three
-        </Link>
+        </Link> */}
         <Link to="/three-chair" className="Nav-options">
           Three-chair
         </Link>
