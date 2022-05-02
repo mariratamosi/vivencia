@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
-import { Points, PointMaterial } from "@react-three/drei"
+import { Points, PointMaterial, OrbitControls } from "@react-three/drei"
 import * as random from "maath/random/dist/maath-random.esm"
 
 export default function ThreeStars() {
@@ -8,6 +8,7 @@ export default function ThreeStars() {
     <div className="sky">
       <Canvas camera={{ position: [0, 0, 1] }}>
         <Stars />
+        <OrbitControls />
       </Canvas>
     </div>
   )
@@ -19,8 +20,9 @@ function Stars(props) {
     random.inSphere(new Float32Array(5000), { radius: 1.5 })
   )
   useFrame((state, delta) => {
-    ref.current.rotation.x -= delta / 10
-    ref.current.rotation.y -= delta / 15
+    ref.current.rotation.x -= delta / 2
+    ref.current.rotation.y -= delta / 3
+    ref.current.rotation.z -= delta / 5
   })
   return (
     <group rotation={[0, 0, Math.PI / 4]}>

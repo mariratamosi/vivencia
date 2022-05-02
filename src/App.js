@@ -6,7 +6,7 @@ import InfiniteDot from "./modules/infinityDot"
 import ModelChair from "./three/Chairs/ModelChair"
 import Navbar from "./Navbar"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import ThreeStars from "./three/ThreeStars"
+import BreathingDots from "./three/breathing-dot"
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<FireWorks />} />
           <Route path="/infinity" element={<InfiniteDot />} />
-          <Route path="/three-basic" element={<ThreeStars />} />
+          <Route path="/breathing-dot" element={<BreathingDots />} />
           <Route path="/three-chair" element={<ModelChair />} />
         </Routes>
       </div>
