@@ -78,7 +78,11 @@ const HTMLContent = ({
 
 function Loader() {
   const { active, progress, errors, item, loaded, total } = useProgress()
-  return <Html center>{progress} % loaded</Html>
+  return (
+    <Html center>
+      <div className="loading-spinner"></div>
+    </Html>
+  )
 }
 
 export default function ModelChair() {
