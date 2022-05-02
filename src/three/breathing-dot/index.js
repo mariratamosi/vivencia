@@ -13,8 +13,14 @@ function Dots() {
     //dotsRef.current.setMatrixAt(0, transform)
 
     for (let i = 0; i < 10000; ++i) {
-      const x = (i % 100) - 50
-      const y = Math.floor(i / 100) - 50
+      let x = (i % 100) - 50
+      let y = Math.floor(i / 100) - 50
+      // Offset every other column (hexagonal pattern)
+      y += (i % 2) * Math.random() * 0.3
+
+      // Add some noise
+      x += Math.random() * 0.3
+      y += Math.random() * 0.3
       transform.setPosition(x, y, 0)
       dotsRef.current.setMatrixAt(i, transform)
     }
